@@ -70,7 +70,7 @@ void Client::addTask(QString taskDescription, double time)
     query.addBindValue(taskDescription);
     query.addBindValue(time);
 
-    qDebug() << "Insertet values: " << query.exec();
+    qDebug() << "Insertet values into task: " << query.exec();
 }
 
 void Client::removeTask(unsigned int task_id)
@@ -81,4 +81,22 @@ void Client::removeTask(unsigned int task_id)
     query.addBindValue(task_id);
 
     qDebug() << "Removed task: " << query.exec();
+}
+
+void Client::addRobot(QString robot_name)
+{
+    query.clear();
+    query.prepare("Insert into robot (name) values(?)");
+    query.addBindValue(robot_name);
+    qDebug() << "Insertet values into robot: " << query.exec();
+}
+
+void Client::removeRobot(QString robot_name)
+{
+    query.clear();
+
+    query.prepare("Delete FROM robot where name = ?");
+    query.addBindValue(robot_name);
+
+    qDebug() << "Removed robot: " << query.exec();
 }

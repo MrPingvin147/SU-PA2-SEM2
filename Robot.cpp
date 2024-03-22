@@ -1,13 +1,18 @@
 #include "Robot.h"
 
-Robot::Robot()
+Robot::Robot(Client& cl, QString robot_name) : mName{robot_name}, mCl{&cl}
 {
-
+    mCl->addRobot(mName);
 }
 
-void Robot::doTask(unsigned int task_id, Client client)
+Robot::~Robot()
 {
-    std::array<QVariant,3> task = client.getTask(task_id);
+    mCl->removeRobot(mName);
+}
+
+void Robot::doTask(unsigned int task_id)
+{
+    std::array<QVariant,3> task = mCl->getTask(task_id);
 
     if (task[0].toInt() == -1)
     {
@@ -18,5 +23,5 @@ void Robot::doTask(unsigned int task_id, Client client)
     qDebug() << "Id | " << "Description | " << "Time";
     qDebug() << task[0].toInt() << " | "  << task[1].toString() << " | " << task[2].toInt();
     // Remove Task after completion
-    client.removeTask(task_id);
+    mCl->removeTask(task_id);
 }

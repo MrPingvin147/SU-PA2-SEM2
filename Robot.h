@@ -6,11 +6,15 @@
 class Robot
 {
 public:
-    Robot();
+    Robot(Client& cl, QString robot_name);
+    ~Robot();
 
-    void doTask(unsigned int task_id, Client client);
+
+    void doTask(unsigned int task_id);
 
 private:
+    Client* mCl;
+    QString mName;
 };
 
 #endif // ROBOT_H

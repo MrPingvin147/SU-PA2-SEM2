@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
     cl.printTasks();
 
-    //Robot rb;
+    Robot rb{cl, "Vacume Cleaner"};
     //rb.doTask(1, cl);
 
     return 0;
