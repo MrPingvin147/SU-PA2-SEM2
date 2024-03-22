@@ -10,7 +10,13 @@ class Client
 public:
     Client(QString hostName, QString databaseName, QString userName, QString userPassword);
 
+    void ChangeDatabase(QString hostName, QString databaseName, QString userName, QString userPassword);
+
     void printTasks();
+
+    void addTask(QString taskDescription, double time);
+    std::array<QVariant,3> getTask(unsigned int task_id);
+    void removeTask(unsigned int task_id);
 
 private:
     QSqlDatabase db;

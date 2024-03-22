@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5Sql REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Quick Sql)
 
-add_executable(SU-PA2-SEM2 main.cpp Client.cpp Client.h)
+add_executable(SU-PA2-SEM2 main.cpp Client.cpp Client.h Robot.cpp Robot.h)
 
 target_link_libraries(SU-PA2-SEM2 Qt5::Sql Qt5::Core Qt5::Quick)
 

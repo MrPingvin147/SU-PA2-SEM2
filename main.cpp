@@ -2,13 +2,13 @@
 #include <iomanip>
 #include <string>
 
-#include "Client.h"
+#include "Robot.h"
 
 void exercise1()
 {
     QSqlQuery query;
 
-    qDebug() << query.exec("select e.fname, e.address from department as d, employee as e where dname like \"research\";");
+    query.exec("select e.fname, e.address from department as d, employee as e where dname like \"research\";");
 
     qDebug() << "fname | " << "adress";
     while (query.next())
@@ -18,25 +18,43 @@ void exercise1()
 
          qDebug() << fname << " | "  << adress;
     }
+
+    query.clear();
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("company");
-    db.setUserName("root");  // Change to username
-    db.setPassword("Tqk97wew.");  // Change to password
-    db.open();
+    Client cl{"localhost", "company", "root", "Tqk97wew."};
 
     // Exercise 1
     exercise1();
-    db.close();
-    QSqlDatabase::removeDatabase("qt_sql_default_connection");
 
-    Client cl{"localhost", "robot_worker", "root", "Tqk97wew."};
+    cl.ChangeDatabase("localhost", "robot_worker", "root", "Tqk97wew.");
+
+    try {
+        if ((std::string)argv[1] == "task")
+        {
+            if ((std::string)argv[2] == "print")
+            {
+                cl.printTasks();
+            }
+            else if((std::string)argv[2] == "add")
+            {
+                cl.addTask(argv[3], static_cast<double>(*argv[4]));
+            }
+            else if((std::string)argv[2] == "remove")
+            {
+                cl.removeTask(static_cast<unsigned int>(*argv[3]));
+            }
+        }
+    }  catch (std::logic_error ex) {
+        ex.what();
+    }
 
     cl.printTasks();
+
+    //Robot rb;
+    //rb.doTask(1, cl);
 
     return 0;
 }
