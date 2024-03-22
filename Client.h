@@ -18,8 +18,12 @@ public:
     std::array<QVariant,3> getTask(unsigned int task_id);
     void removeTask(unsigned int task_id);
 
+    void printRobots();
+
     void addRobot(QString robot_name);
     void removeRobot(QString robot_name);
+    bool addRobotTask(QString robot_name, int task_id);
+    bool removeRobotTask(QString robot_name);
 private:
     QSqlDatabase db;
     QSqlQuery query;

@@ -9,12 +9,13 @@ public:
     Robot(Client& cl, QString robot_name);
     ~Robot();
 
-
-    void doTask(unsigned int task_id);
+    void assignTask(unsigned int task_id);
+    void doTask();
 
 private:
     Client* mCl;
     QString mName;
+    int mTask;
 };
 
 #endif // ROBOT_H

@@ -10,18 +10,41 @@ Robot::~Robot()
     mCl->removeRobot(mName);
 }
 
-void Robot::doTask(unsigned int task_id)
+void Robot::assignTask(unsigned int task_id)
 {
-    std::array<QVariant,3> task = mCl->getTask(task_id);
+    mTask = task_id;
+    bool success = mCl->addRobotTask(mName, mTask);
 
-    if (task[0].toInt() == -1)
+    if (!success)
     {
         return;
     }
+    std::array<QVariant,3> task = mCl->getTask(mTask);
 
-    // Do Task
     qDebug() << "Id | " << "Description | " << "Time";
     qDebug() << task[0].toInt() << " | "  << task[1].toString() << " | " << task[2].toInt();
+    qDebug() << "";
+}
+
+void Robot::doTask()
+{
+    if (mTask == -1)
+    {
+        qDebug() << "No Current task";
+        qDebug() << "";
+        return;
+    }
+    // Do Task
+
     // Remove Task after completion
-    mCl->removeTask(task_id);
+    if (mCl->removeRobotTask(mName))
+    {
+        mCl->removeTask(mTask);
+        mTask = -1;
+    }
+    else
+    {
+        qDebug() << "Failed to remove task after completion";
+        qDebug() << "";
+    }
 }
