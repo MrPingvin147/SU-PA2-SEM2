@@ -18,5 +18,5 @@ void Robot::doTask(unsigned int task_id, Client client)
     qDebug() << "Id | " << "Description | " << "Time";
     qDebug() << task[0].toInt() << " | "  << task[1].toString() << " | " << task[2].toInt();
     // Remove Task after completion
-    //client.removeTask(task_id);
+    client.removeTask(task_id);
 }
